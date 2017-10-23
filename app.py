@@ -2,9 +2,15 @@ from flask import Flask, request
 import os
 import socket
 import json
+from redis import Redis
 
 # Connect to Redis
-#redis = Redis(host="redis", db=0, socket_connect_timeout=2, socket_timeout=2)
+try:
+    r = Redis(host="redis", password=os.getenv("RP", "default"), db=0, socket_connect_timeout=2, socket_timeout=2)
+    cache = True
+except:
+    cache = False
+    print "no cache"
 
 app = Flask(__name__)
 
