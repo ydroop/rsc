@@ -3,11 +3,13 @@ import os
 import socket
 import json
 from redis import Redis
+from datetime import timedelta
 
 # Connect to Redis
 try:
     r = Redis(host="redis", password=os.getenv("RP", "default"), db=0, socket_connect_timeout=2, socket_timeout=2)
     cache = True
+    print "cache ok"
 except:
     cache = False
     print "no cache"
@@ -26,11 +28,17 @@ def bns():
         ns_list = request.get_json()
         result = {}
         for i in ns_list:
-            try:
-                a = socket.gethostbyname_ex(i)[2]
-            except:
-                a = ['failed']
-
+            if cache and r.exists(i):
+                a = json.loads( r.get(i) )
+            else:
+                try:
+                    a = socket.gethostbyname_ex(i)[2]
+                except:
+                    a = ['failed']
+                if cache:
+                    print 'update cache for '+ str(i)
+                    r.set( i, json.dumps( a ) )
+                    r.expire( i , timedelta(days=3) )
             result[i] = a
         return json.dumps(result), 200
     else:
