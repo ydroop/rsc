@@ -53,17 +53,14 @@ def status():
             c_list = r.keys()
         else:
             c_list = []
-                             
+        
         in_cache = len( c_list )
         result = len(set(ns_list) - set(c_list) )
         request_len = len( ns_list ) 
-                             
-        return json.dumps( { 'total_cached' : in_cache, 'cached_in_request' : result , 'in_request' : request_len } ), 200
+        
+        return json.dumps( { 'total_cached' : in_cache , 'cached_in_request' : result , 'in_request' : request_len } ), 200
     else:
-        return 'Forbidden', 403                            
-        
-        
-
-                             
+        return 'Forbidden', 403
+                     
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=8080)
