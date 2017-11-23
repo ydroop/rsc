@@ -39,7 +39,7 @@ def bns():
                 if cache:
                     print 'update cache for '+ str(i)
                     r.set( i, json.dumps( a ) )
-                    r.expire( i , timedelta(days=randint(2,5) )
+                    r.expire( i , timedelta(days=randint(2,5) ) )
             result[i] = a
         return json.dumps(result), 200
     else:
