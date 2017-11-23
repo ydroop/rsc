@@ -4,6 +4,7 @@ import socket
 import json
 from redis import Redis
 from datetime import timedelta
+from random import timedelta
 
 # Connect to Redis
 try:
@@ -38,7 +39,7 @@ def bns():
                 if cache:
                     print 'update cache for '+ str(i)
                     r.set( i, json.dumps( a ) )
-                    r.expire( i , timedelta(days=3) )
+                    r.expire( i , timedelta(days=randint(2,5) )
             result[i] = a
         return json.dumps(result), 200
     else:
