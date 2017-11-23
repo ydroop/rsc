@@ -4,7 +4,7 @@ import socket
 import json
 from redis import Redis
 from datetime import timedelta
-from random import timedelta
+from random import randint
 
 # Connect to Redis
 try:
