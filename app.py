@@ -55,10 +55,11 @@ def status():
             c_list = []
                              
         in_cache = len( c_list )
-        result = len(set(ns_list) - set(c_list) )
+        result = len(set(ns_list) & set(c_list) )
+        not_cached = list( set(ns_list) - set(c_list) )
         request_len = len( ns_list ) 
                              
-        return json.dumps( { 'total_cached' : in_cache, 'cached_in_request' : result , 'in_request' : request_len } ), 200
+        return json.dumps( { 'total_cached' : in_cache, 'cached_in_request' : result , 'in_request' : request_len }, 'not_cached' : not_cached ), 200
     else:
         return 'Forbidden', 403                            
         
