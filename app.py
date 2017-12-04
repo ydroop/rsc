@@ -37,7 +37,10 @@ def bns():
                 except:
                     a = ['failed']
                 if cache:
-                    print 'update cache for '+ str(i)
+                    try:
+                        print 'update cache for '+ str(i)
+                    except:
+                        print 'encoding error'
                     r.set( i, json.dumps( a ) )
                     r.expire( i , timedelta(days=randint(2,5) ) )
             result[i] = a
